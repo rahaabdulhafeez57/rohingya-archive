@@ -1,0 +1,462 @@
+index_html = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohingya Relief Fund | Emergency Aid for Education, Health & Food</title>
+    <meta name="description" content="Support Rohingya refugees in Cox's Bazar. 100% direct aid for Education, Health & Food. Donate via Bkash/Nagad. Photo proof provided.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #1a365d; --secondary: #c53030; --accent: #d69e2e; --success: #38a169; --text: #2d3748; --light: #f7fafc; --white: #ffffff; --border: #e2e8f0; --bkash: #e2136e; --nagad: #f7931e; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: var(--text); background: var(--white); }
+        
+        /* URGENCY BAR */
+        .urgency-bar { background: linear-gradient(90deg, var(--secondary), #e53e3e); color: var(--white); text-align: center; padding: 0.8rem 1rem; font-size: 0.9rem; font-weight: 700; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.85; } }
+        
+        /* NAVIGATION */
+        .navbar { background: var(--primary); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { color: var(--white); font-size: 1.2rem; font-weight: 800; text-decoration: none; line-height: 1.2; }
+        .logo span { display: block; font-size: 0.7rem; font-weight: 400; opacity: 0.9; }
+        .donate-nav-btn { background: var(--accent); color: var(--primary); padding: 0.5rem 1rem; border-radius: 25px; text-decoration: none; font-weight: 700; font-size: 0.85rem; animation: pulse 2s infinite; }
+        .nav-links { display: none; list-style: none; position: absolute; top: 60px; left: 0; width: 100%; background: var(--primary); padding: 1rem; }
+        .nav-links.active { display: block; }
+        .nav-links a { color: var(--white); text-decoration: none; display: block; padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 500; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+        .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+        .hamburger span { width: 25px; height: 3px; background: var(--white); border-radius: 2px; }
+        
+        /* HERO */
+        .hero { background: linear-gradient(135deg, var(--primary) 0%, #2c5282 100%); color: var(--white); padding: 3rem 1rem; text-align: center; }
+        .hero h1 { font-size: 1.8rem; margin-bottom: 1rem; font-weight: 800; line-height: 1.3; }
+        .hero-subtitle { font-size: 1.05rem; opacity: 0.9; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 600px; margin: 0 auto 2rem; }
+        .stat { text-align: center; background: rgba(255,255,255,0.1); padding: 0.8rem; border-radius: 8px; }
+        .stat-number { display: block; font-size: 1.4rem; font-weight: 800; color: var(--accent); }
+        .stat-label { font-size: 0.75rem; opacity: 0.9; }
+        .hero-cta { display: flex; flex-direction: column; gap: 1rem; max-width: 400px; margin: 0 auto; }
+        .btn-donate { display: block; background: var(--secondary); color: var(--white); padding: 1rem 2rem; text-decoration: none; border-radius: 50px; font-weight: 800; font-size: 1.1rem; text-align: center; animation: pulse 2s infinite; box-shadow: 0 4px 15px rgba(197, 48, 48, 0.4); }
+        .btn-secondary { display: block; background: transparent; color: var(--white); padding: 0.8rem 2rem; text-decoration: none; border-radius: 50px; font-weight: 600; font-size: 0.95rem; text-align: center; border: 2px solid rgba(255,255,255,0.3); }
+        
+        /* SHARE BUTTONS */
+        .share-section { background: var(--light); padding: 1rem; text-align: center; }
+        .share-title { font-size: 0.9rem; color: var(--primary); font-weight: 700; margin-bottom: 0.5rem; }
+        .share-buttons { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+        .share-btn { padding: 0.5rem 1rem; border-radius: 20px; text-decoration: none; color: white; font-size: 0.8rem; font-weight: 600; border: none; cursor: pointer; }
+        .share-fb { background: #1877f2; }
+        .share-wa { background: #25d366; }
+        .share-tw { background: #1da1f2; }
+        .share-copy { background: var(--primary); }
+        
+        /* PHOTO GALLERY - ROHINGYA SITUATION */
+        .photo-section { padding: 3rem 1rem; max-width: 1200px; margin: 0 auto; }
+        .photo-title { text-align: center; font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem; }
+        .photo-subtitle { text-align: center; color: #718096; margin-bottom: 2rem; font-size: 0.95rem; }
+        .photo-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        .photo-card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 2px solid var(--border); }
+        .photo-placeholder { background: linear-gradient(135deg, #e2e8f0, #cbd5e0); height: 200px; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #718096; font-size: 0.9rem; text-align: center; padding: 1rem; }
+        .photo-placeholder .icon { font-size: 3rem; margin-bottom: 0.5rem; }
+        .photo-content { padding: 1.5rem; }
+        .photo-content h3 { color: var(--secondary); font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .photo-content p { color: #718096; font-size: 0.9rem; line-height: 1.7; }
+        .photo-tag { display: inline-block; background: var(--secondary); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.75rem; font-weight: 700; margin-top: 0.5rem; }
+        
+        /* DONATION CAUSES */
+        .donation-section { padding: 3rem 1rem; max-width: 1200px; margin: 0 auto; background: var(--light); }
+        .section-title { text-align: center; font-size: 1.6rem; margin-bottom: 0.5rem; color: var(--primary); }
+        .section-subtitle { text-align: center; color: #718096; margin-bottom: 2rem; font-size: 1rem; }
+        .cause-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        .cause-card { background: var(--white); border-radius: 15px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid; }
+        .cause-card.education { border-top-color: #3182ce; }
+        .cause-card.health { border-top-color: #e53e3e; }
+        .cause-card.food { border-top-color: #dd6b20; }
+        .cause-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .cause-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .cause-card.education h3 { color: #3182ce; }
+        .cause-card.health h3 { color: #e53e3e; }
+        .cause-card.food h3 { color: #dd6b20; }
+        .cause-card p { color: #718096; font-size: 0.95rem; margin-bottom: 1rem; line-height: 1.7; }
+        .impact-list { list-style: none; margin-bottom: 1.5rem; }
+        .impact-list li { padding: 0.4rem 0; font-size: 0.9rem; color: var(--text); border-bottom: 1px solid var(--border); }
+        .impact-list li strong { color: var(--primary); }
+        .btn-cause-donate { display: block; width: 100%; padding: 0.8rem; text-align: center; text-decoration: none; border-radius: 8px; font-weight: 700; color: var(--white); font-size: 1rem; }
+        .btn-education { background: #3182ce; }
+        .btn-health { background: #e53e3e; }
+        .btn-food { background: #dd6b20; }
+        
+        /* PAYMENT METHODS */
+        .payment-section { background: var(--white); padding: 3rem 1rem; }
+        .payment-container { max-width: 800px; margin: 0 auto; }
+        .payment-title { text-align: center; font-size: 1.4rem; color: var(--primary); margin-bottom: 0.5rem; }
+        .payment-subtitle { text-align: center; color: #718096; margin-bottom: 2rem; font-size: 0.95rem; }
+        .payment-options { display: grid; grid-template-columns: 1fr; gap: 1rem; max-width: 500px; margin: 0 auto; }
+        .payment-card { background: var(--light); border-radius: 12px; padding: 1.5rem; text-align: center; border: 2px solid var(--border); }
+        .payment-logo { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .bkash-logo { color: var(--bkash); }
+        .nagad-logo { color: var(--nagad); }
+        .payment-number { font-size: 1.4rem; font-weight: 800; color: var(--text); margin: 0.5rem 0; letter-spacing: 1px; background: var(--white); padding: 0.5rem; border-radius: 8px; border: 1px dashed var(--border); }
+        .payment-name { font-size: 0.9rem; color: #718096; margin-bottom: 1rem; }
+        .payment-steps { text-align: left; font-size: 0.85rem; color: #718096; margin-bottom: 1rem; background: var(--white); padding: 1rem; border-radius: 8px; }
+        .payment-steps ol { margin-left: 1.2rem; }
+        .payment-steps li { margin-bottom: 0.4rem; }
+        .btn-copy { width: 100%; background: var(--primary); color: var(--white); border: none; padding: 0.8rem; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1rem; }
+        .verify-box { background: linear-gradient(135deg, #f0fff4, #c6f6d5); border: 2px solid var(--success); border-radius: 12px; padding: 1.5rem; text-align: center; margin-top: 2rem; }
+        .verify-box h3 { color: var(--success); font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .verify-box p { color: #2f855a; font-size: 0.9rem; margin-bottom: 1rem; }
+        .btn-verify { display: inline-block; background: var(--success); color: var(--white); padding: 0.8rem 2rem; text-decoration: none; border-radius: 25px; font-weight: 700; }
+        
+        /* TRUST SECTION */
+        .trust-section { padding: 3rem 1rem; max-width: 800px; margin: 0 auto; }
+        .trust-title { text-align: center; font-size: 1.2rem; color: var(--primary); margin-bottom: 1.5rem; }
+        .trust-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        .trust-card { display: flex; align-items: flex-start; gap: 1rem; background: var(--light); padding: 1rem; border-radius: 10px; }
+        .trust-card .icon { font-size: 1.5rem; flex-shrink: 0; }
+        .trust-card h4 { color: var(--primary); font-size: 1rem; margin-bottom: 0.3rem; }
+        .trust-card p { color: #718096; font-size: 0.9rem; }
+        
+        /* FOOTER */
+        .footer { background: var(--primary); color: var(--white); padding: 2rem 1rem; text-align: center; }
+        .footer .contact-info { margin: 1rem auto; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px; max-width: 600px; }
+        .footer p { opacity: 0.8; font-size: 0.85rem; margin: 0.3rem 0; }
+        
+        @media (min-width: 768px) { 
+            .nav-links { display: flex !important; position: static; width: auto; gap: 1.5rem; padding: 0; align-items: center; } 
+            .nav-links a { border: none; padding: 0; font-size: 0.9rem; } 
+            .hamburger { display: none; } 
+            .hero h1 { font-size: 2.5rem; } 
+            .photo-grid { grid-template-columns: repeat(3, 1fr); } 
+            .cause-grid { grid-template-columns: repeat(3, 1fr); } 
+            .payment-options { grid-template-columns: repeat(2, 1fr); } 
+            .trust-grid { grid-template-columns: repeat(2, 1fr); } 
+        }
+    </style>
+</head>
+<body>
+
+    <!-- URGENCY BAR -->
+    <div class="urgency-bar">
+        🚨 EMERGENCY: 1.1 Million Rohingya Refugees Need Food, Medicine & Education | Bkash/Nagad: 01821711952
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                Rohingya Relief
+                <span>by RAHA | Direct Aid</span>
+            </a>
+            <a href="#payment" class="donate-nav-btn">❤️ DONATE</a>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="timeline.html">History</a></li>
+                <li><a href="current-crisis.html">Crisis</a></li>
+                <li><a href="documentation.html">Documentation</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>1.1 Million Rohingya Refugees Need Your Help Today</h1>
+        <p class="hero-subtitle">Your donation goes directly to Education, Health & Food. No middlemen. 100% transparent with photo proof.</p>
+        <div class="hero-stats">
+            <div class="stat">
+                <span class="stat-number">1.1M+</span>
+                <span class="stat-label">Refugees in Camps</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">65,000+</span>
+                <span class="stat-label">New Arrivals 2024</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Direct Aid</span>
+            </div>
+        </div>
+        <div class="hero-cta">
+            <a href="#payment" class="btn-donate">❤️ DONATE NOW - SAVE LIVES</a>
+            <a href="timeline.html" class="btn-secondary">Learn Our History →</a>
+        </div>
+    </section>
+
+    <!-- SHARE BUTTONS -->
+    <section class="share-section">
+        <p class="share-title">📢 Share This Page - Help Us Reach More Donors</p>
+        <div class="share-buttons">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://rahaabdulhafeez57.github.io/rohingya-archive" target="_blank" class="share-btn share-fb">📘 Facebook</a>
+            <a href="https://wa.me/?text=Support%20Rohingya%20Refugees%20-%20Donate%20for%20Education%2C%20Health%20%26%20Food%20https%3A%2F%2Frahaabdulhafeez57.github.io%2Frohingya-archive" target="_blank" class="share-btn share-wa">💬 WhatsApp</a>
+            <a href="https://twitter.com/intent/tweet?text=Support%20Rohingya%20Refugees%20-%20Education%2C%20Health%20%26%20Food%20Aid&url=https://rahaabdulhafeez57.github.io/rohingya-archive" target="_blank" class="share-btn share-tw">🐦 Twitter</a>
+            <button onclick="copyLink()" class="share-btn share-copy">📋 Copy Link</button>
+        </div>
+    </section>
+
+    <!-- PHOTO GALLERY - ROHINGYA SITUATION -->
+    <section class="photo-section">
+        <h2 class="photo-title">📸 The Reality of Rohingya Refugees</h2>
+        <p class="photo-subtitle">These photos show the desperate situation. Your donation can change these lives.</p>
+        
+        <div class="photo-grid">
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <div class="icon">📸</div>
+                    <p><strong>Photo 1: Destroyed Village</strong><br>Rohingya village burned during 2017 genocide<br><em>Upload photo of destroyed homes</em></p>
+                </div>
+                <div class="photo-content">
+                    <h3>🔥 Genocide Aftermath</h3>
+                    <p>In August 2017, Myanmar military burned 354 Rohingya villages. Families watched their homes destroyed. 700,000+ fled with nothing. This is what they left behind.</p>
+                    <span class="photo-tag">GENOCIDE EVIDENCE</span>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <div class="icon">🏥</div>
+                    <p><strong>Photo 2: No Medical Care</strong><br>Sick child with no medicine in camp<br><em>Upload photo of health crisis</em></p>
+                </div>
+                <div class="photo-content">
+                    <h3>🏥 Health Crisis</h3>
+                    <p>NGO hospitals only treat normal illness. For serious conditions - diabetes, surgery, blood diseases - refugees need private hospitals. But they have no money. Many die from treatable diseases.</p>
+                    <span class="photo-tag">HEALTH EMERGENCY</span>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <div class="icon">📚</div>
+                    <p><strong>Photo 3: No School</strong><br>Children with no books or classroom<br><em>Upload photo of education crisis</em></p>
+                </div>
+                <div class="photo-content">
+                    <h3>📚 Education Crisis</h3>
+                    <p>Rohingya children cannot attend Bangladesh schools. NGO classes only teach basic literacy. No higher education, no bachelor degrees, no computer skills, no nursing training. A generation is losing its future.</p>
+                    <span class="photo-tag">EDUCATION EMERGENCY</span>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <div class="icon">🍚</div>
+                    <p><strong>Photo 4: Hungry Children</strong><br>Family with no food rations<br><em>Upload photo of food crisis</em></p>
+                </div>
+                <div class="photo-content">
+                    <h3>🍚 Food Crisis</h3>
+                    <p>WFP cut food rations from $12 to $6 per person per month. New arrivals since 2024 are not registered with UNHCR and receive NOTHING. Families beg for food. Children go to sleep hungry.</p>
+                    <span class="photo-tag">FOOD EMERGENCY</span>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <div class="icon">🏚️</div>
+                    <p><strong>Photo 5: Leaking Shelter</strong><br>Family in damaged tent during monsoon<br><em>Upload photo of shelter crisis</em></p>
+                </div>
+                <div class="photo-content">
+                    <h3>🏚️ Shelter Crisis</h3>
+                    <p>Refugee shelters are made of bamboo and plastic. Every monsoon, roofs leak and walls collapse. Families huddle under wet blankets. No money to buy new tarpaulin or bamboo poles.</p>
+                    <span class="photo-tag">SHELTER EMERGENCY</span>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-placeholder">
+                    <div class="icon">⚰️</div>
+                    <p><strong>Photo 6: Boat Deaths</strong><br>Rohingya boat refugees who died at sea<br><em>Upload photo of boat crisis</em></p>
+                </div>
+                <div class="photo-content">
+                    <h3>⚰️ Boat Crisis</h3>
+                    <p>Desperate refugees pay smugglers $2,000-$4,000 for dangerous sea journeys. 457 died or went missing in just 5 months (Jan-May 2025). Bodies wash up on shores. Families never know if loved ones survived.</p>
+                    <span class="photo-tag">BOAT EMERGENCY</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DONATION CAUSES -->
+    <section class="donation-section" id="donate">
+        <h2 class="section-title">💚 Support Our Community</h2>
+        <p class="section-subtitle">Choose where your donation goes. Every taka makes a real difference.</p>
+        
+        <div class="cause-grid">
+            <div class="cause-card education">
+                <div class="cause-icon">📚</div>
+                <h3>Education</h3>
+                <p>Rohingya refugees need higher education to rebuild our future. NGO education only teaches basic literacy. We need bachelor degrees, health training, computer skills to return to our motherland as educated people.</p>
+                <ul class="impact-list">
+                    <li><strong>৳1,000:</strong> School supplies for 5 children</li>
+                    <li><strong>৳2,500:</strong> Monthly tuition support</li>
+                    <li><strong>৳5,000:</strong> Computer course fee</li>
+                    <li><strong>৳10,000:</strong> University semester support</li>
+                </ul>
+                <a href="#payment" class="btn-cause-donate btn-education">Donate for Education →</a>
+            </div>
+
+            <div class="cause-card health">
+                <div class="cause-icon">🏥</div>
+                <h3>Health</h3>
+                <p>NGO hospitals only treat normal illness. For serious conditions - surgery, blood tests, specialist doctors - refugees need private hospitals in Cox's Bazar, Chittagong, and Dhaka. But refugees have no money for treatment.</p>
+                <ul class="impact-list">
+                    <li><strong>৳500:</strong> Doctor consultation fee</li>
+                    <li><strong>৳1,500:</strong> Medicine for 1 month</li>
+                    <li><strong>৳3,000:</strong> Blood test & diagnosis</li>
+                    <li><strong>৳5,000:</strong> Emergency treatment fund</li>
+                </ul>
+                <a href="#payment" class="btn-cause-donate btn-health">Donate for Health →</a>
+            </div>
+
+            <div class="cause-card food">
+                <div class="cause-icon">🍚</div>
+                <h3>Food</h3>
+                <p>Families who arrived in 2024-2026 are still not registered with UNHCR. They receive no food rations and must beg from other refugees. WFP cut rations to $6 per month. Children go to sleep hungry.</p>
+                <ul class="impact-list">
+                    <li><strong>৳500:</strong> Rice & lentils for 1 family (3 days)</li>
+                    <li><strong>৳1,000:</strong> Full food package for 1 week</li>
+                    <li><strong>৳2,000:</strong> Vegetables, oil, protein (2 weeks)</li>
+                    <li><strong>৳5,000:</strong> Monthly food for 1 family</li>
+                </ul>
+                <a href="#payment" class="btn-cause-donate btn-food">Donate for Food →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAYMENT METHODS -->
+    <section class="payment-section" id="payment">
+        <div class="payment-container">
+            <h2 class="payment-title">💳 Send Money Now</h2>
+            <p class="payment-subtitle">Bkash or Nagad - Fast, Easy, Direct to RAHA</p>
+            
+            <div class="payment-options">
+                <div class="payment-card">
+                    <div class="payment-logo bkash-logo">bKash</div>
+                    <div class="payment-number" id="bkashNum">01821711952</div>
+                    <div class="payment-name">Account: RAHA (Personal)</div>
+                    <div class="payment-steps">
+                        <ol>
+                            <li>Open <strong>Bkash app</strong></li>
+                            <li>Tap <strong>"Send Money"</strong></li>
+                            <li>Enter: <strong>01821711952</strong></li>
+                            <li>Enter amount & your PIN</li>
+                            <li><strong>SAVE SCREENSHOT!</strong></li>
+                        </ol>
+                    </div>
+                    <button class="btn-copy" onclick="copyNumber('bkashNum')">📋 Copy Number</button>
+                </div>
+
+                <div class="payment-card">
+                    <div class="payment-logo nagad-logo">Nagad</div>
+                    <div class="payment-number" id="nagadNum">01821711952</div>
+                    <div class="payment-name">Account: RAHA (Personal)</div>
+                    <div class="payment-steps">
+                        <ol>
+                            <li>Open <strong>Nagad app</strong></li>
+                            <li>Tap <strong>"Send Money"</strong></li>
+                            <li>Enter: <strong>01821711952</strong></li>
+                            <li>Enter amount & your PIN</li>
+                            <li><strong>SAVE SCREENSHOT!</strong></li>
+                        </ol>
+                    </div>
+                    <button class="btn-copy" onclick="copyNumber('nagadNum')">📋 Copy Number</button>
+                </div>
+            </div>
+
+            <div class="verify-box">
+                <h3>✅ After Sending Money</h3>
+                <p>Send your payment screenshot + your name via WhatsApp. RAHA will send you photo proof of exactly how your donation helped within 48 hours.</p>
+                <a href="https://wa.me/8801821711952" class="btn-verify">Verify via WhatsApp →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST SECTION -->
+    <section class="trust-section">
+        <h2 class="trust-title">Why Donors Trust RAHA</h2>
+        <div class="trust-grid">
+            <div class="trust-card">
+                <span class="icon">📸</span>
+                <div>
+                    <h4>Photo Proof</h4>
+                    <p>You receive photos of exactly what your money bought - school supplies, medicine, food packages.</p>
+                </div>
+            </div>
+            <div class="trust-card">
+                <span class="icon">💬</span>
+                <div>
+                    <h4>Direct WhatsApp</h4>
+                    <p>Chat directly with RAHA. Ask questions anytime. See real-time updates from the camps.</p>
+                </div>
+            </div>
+            <div class="trust-card">
+                <span class="icon">👤</span>
+                <div>
+                    <h4>Real Person</h4>
+                    <p>RAHA is a real Rohingya refugee living in Cox's Bazar. Not an NGO with office costs.</p>
+                </div>
+            </div>
+            <div class="trust-card">
+                <span class="icon">📊</span>
+                <div>
+                    <h4>Monthly Reports</h4>
+                    <p>See how much was raised, how it was spent, and how many people were helped each month.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="contact-info">
+            <p><strong>💚 Contact RAHA Directly</strong></p>
+            <p>WhatsApp: +880 1821711952</p>
+            <p>Email: raha57.personal1@gmail.com</p>
+            <p>Bkash/Nagad: 01821711952</p>
+            <p>Location: Cox's Bazar Refugee Camp, Bangladesh</p>
+        </div>
+        <p>&copy; 2026 Rohingya Relief by RAHA</p>
+        <p>Documenting History | Supporting Education, Health & Food</p>
+        <p>100% Transparent. 0% Overhead. Real Impact.</p>
+        
+        <!-- SHARE IN FOOTER -->
+        <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.2);">
+            <p style="margin-bottom: 0.5rem;"><strong>Share This Page:</strong></p>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://rahaabdulhafeez57.github.io/rohingya-archive" target="_blank" style="color: #1877f2; text-decoration: none; margin: 0 5px;">📘 Facebook</a>
+            <a href="https://wa.me/?text=Support%20Rohingya%20Refugees%20https%3A%2F%2Frahaabdulhafeez57.github.io%2Frohingya-archive" target="_blank" style="color: #25d366; text-decoration: none; margin: 0 5px;">💬 WhatsApp</a>
+            <a href="https://twitter.com/intent/tweet?text=Support%20Rohingya%20Refugees&url=https://rahaabdulhafeez57.github.io/rohingya-archive" target="_blank" style="color: #1da1f2; text-decoration: none; margin: 0 5px;">🐦 Twitter</a>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+        function copyNumber(id) {
+            const num = document.getElementById(id).textContent;
+            navigator.clipboard.writeText(num).then(() => {
+                alert('✅ Number copied: ' + num + '\n\nNow open your Bkash/Nagad app and send money!\n\nDon\'t forget to save your screenshot for verification.');
+            }).catch(() => {
+                alert('Number: ' + num + '\nPlease manually copy this number.');
+            });
+        }
+        function copyLink() {
+            const url = 'https://rahaabdulhafeez57.github.io/rohingya-archive';
+            navigator.clipboard.writeText(url).then(() => {
+                alert('✅ Link copied!\n\nPaste this link anywhere to share:\n' + url);
+            }).catch(() => {
+                alert('Link: ' + url + '\nPlease manually copy this link.');
+            });
+        }
+    </script>
+
+</body>
+</html>'''
+
+with open('/mnt/agents/output/index.html', 'w', encoding='utf-8') as f:
+    f.write(index_html)
+
+print("✅ index.html created with photos, share buttons, and donation!")
