@@ -108,10 +108,473 @@
         }
 
         .content-section {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 2rem 1rem;
         }
+
+        .contact-info {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+            border-left: 4px solid var(--accent);
+        }
+
+        .contact-info h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .contact-info p {
+            color: #718096;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .contact-info .email-highlight {
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .visitor-types {
+            margin-bottom: 2rem;
+        }
+
+        .visitor-types h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .visitor-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .visitor-card {
+            background: var(--light);
+            padding: 1.2rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .visitor-card:hover {
+            transform: translateX(5px);
+        }
+
+        .visitor-card h4 {
+            color: var(--primary);
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .visitor-card p {
+            color: #718096;
+            font-size: 0.85rem;
+        }
+
+        .contact-form {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--text);
+            background: var(--white);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--secondary);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        .note {
+            text-align: center;
+            color: #718096;
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .note strong {
+            color: var(--primary);
+        }
+
+        .footer {
+            background: var(--primary);
+            color: var(--white);
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex !important;
+                position: static;
+                width: auto;
+                gap: 2rem;
+                padding: 0;
+            }
+
+            .nav-links a {
+                border: none;
+                padding: 0;
+            }
+
+            .hamburger {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .content-section {
+                padding: 3rem 2rem;
+            }
+
+            .visitor-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Rohingya Archive</a>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="timeline.html">Timeline</a></li>
+                <li><a href="history.html">History</a></li>
+                <li><a href="documentation.html">Documentation</a></li>
+                <li><a href="current-crisis.html">Current Crisis</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <h1>Contact Us</h1>
+        <p>Get in touch for research, collaborations, corrections, or inquiries</p>
+    </section>
+
+    <div class="content-section">
+
+        <div class="contact-info">
+            <h2>Contact Information</h2>
+            <p><strong>Archive Maintainer:</strong> RAHA</p>
+            <p class="email-highlight">raha57.personal1@gmail.com</p>
+            <p><strong>Purpose:</strong> Educational Documentation Project</p>
+            <p><strong>Response Time:</strong> Within 48-72 hours</p>
+        </div>
+
+        <div class="visitor-types">
+            <h3>Quick Message Templates - Tap to Fill</h3>
+            <div class="visitor-grid">
+                <div class="visitor-card" onclick="fillTemplate('researcher')">
+                    <h4>🔬 Researcher / Academic</h4>
+                    <p>Citation requests, source materials, data verification</p>
+                </div>
+                <div class="visitor-card" onclick="fillTemplate('journalist')">
+                    <h4>📰 Journalist / Media</h4>
+                    <p>Fact-checking, interviews, background information</p>
+                </div>
+                <div class="visitor-card" onclick="fillTemplate('student')">
+                    <h4>🎓 Student / Educator</h4>
+                    <p>Educational use, project help, learning resources</p>
+                </div>
+                <div class="visitor-card" onclick="fillTemplate('advocate')">
+                    <h4>✊ Human Rights Advocate</h4>
+                    <p>Collaboration, awareness campaigns, legal support</p>
+                </div>
+                <div class="visitor-card" onclick="fillTemplate('correction')">
+                    <h4>📝 Correction / Update</h4>
+                    <p>Report errors, suggest updates, provide new data</p>
+                </div>
+                <div class="visitor-card" onclick="fillTemplate('general')">
+                    <h4>💬 General Inquiry</h4>
+                    <p>Feedback, questions, appreciation, support</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <form action="mailto:raha57.personal1@gmail.com" method="post" enctype="text/plain" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Your Name *</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Your Email Address *</label>
+                    <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="visitorType">I am a... *</label>
+                    <select id="visitorType" name="visitor_type" required onchange="updateSubject()">
+                        <option value="">Select your role</option>
+                        <option value="researcher">Researcher / Academic</option>
+                        <option value="journalist">Journalist / Media Professional</option>
+                        <option value="student">Student / Educator</option>
+                        <option value="advocate">Human Rights Advocate</option>
+                        <option value="ngo">NGO / Humanitarian Worker</option>
+                        <option value="policymaker">Policymaker / Government</option>
+                        <option value="rohingya">Rohingya Community Member</option>
+                        <option value="general">General Visitor / Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject *</label>
+                    <input type="text" id="subject" name="subject" placeholder="What is your message about?" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Your Message *</label>
+                    <textarea id="message" name="message" placeholder="Please describe your inquiry, feedback, or request in detail..." required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Send Message to RAHA</button>
+            </form>
+        </div>
+
+        <div class="note">
+            <p><strong>Note:</strong> This form will open your email app with a pre-filled message to <strong>raha57.personal1@gmail.com</strong>. Please ensure you have an email client installed on your device.</p>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Rohingya Historical Archive. Educational documentation project.</p>
+        <p>Maintained by RAHA | raha57.personal1@gmail.com</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        function updateSubject() {
+            const type = document.getElementById('visitorType').value;
+            const subjectField = document.getElementById('subject');
+            const messageField = document.getElementById('message');
+
+            const subjects = {
+                'researcher': 'Research Inquiry - Citation and Source Materials',
+                'journalist': 'Media Inquiry - Fact-Checking and Background Information',
+                'student': 'Educational Inquiry - Learning Resources and Academic Use',
+                'advocate': 'Advocacy Collaboration - Human Rights Partnership',
+                'ngo': 'Humanitarian Coordination - NGO Partnership Inquiry',
+                'policymaker': 'Policy Inquiry - Government and Legislative Research',
+                'rohingya': 'Community Inquiry - Rohingya Historical Documentation',
+                'general': 'General Feedback and Inquiry'
+            };
+
+            if (subjects[type]) {
+                subjectField.value = subjects[type];
+            }
+        }
+
+        function fillTemplate(type) {
+            document.getElementById('visitorType').value = type;
+            updateSubject();
+
+            const messages = {
+                'researcher': `Dear RAHA,
+
+I am a researcher conducting academic work on [your research topic]. I found the Rohingya Historical Archive to be an exceptionally well-organized resource.
+
+I would like to request:
+1. Citation guidelines for your timeline and historical documentation
+2. Access to primary source materials referenced in your archive
+3. Permission to reference your work in my upcoming publication
+
+My research focuses on: [describe your research focus]
+Institution: [your university/organization]
+Deadline: [your timeline]
+
+Thank you for maintaining this important educational resource. I look forward to your response.
+
+Best regards,
+[Your Name]`,
+
+                'journalist': `Dear RAHA,
+
+I am a journalist with [media outlet name] working on a story about [topic related to Rohingya].
+
+I am contacting you to:
+1. Verify specific facts and dates from your timeline
+2. Request background context on [specific event or period]
+3. Inquire about potential interview opportunities or expert commentary
+
+Story deadline: [your deadline]
+Publication: [outlet name]
+Format: [article/documentary/podcast/etc.]
+
+I appreciate the comprehensive documentation your archive provides. Please let me know if you require additional information about my request.
+
+Sincerely,
+[Your Name]
+[Your Title]
+[Contact Information]`,
+
+                'student': `Dear RAHA,
+
+I am a student at [school/university name] studying [subject/field]. I discovered your archive while researching the Rohingya crisis for my [assignment/thesis/project].
+
+I would appreciate your assistance with:
+1. Clarification on specific historical events documented in your timeline
+2. Guidance on additional academic sources for deeper research
+3. Permission to cite your archive in my academic work
+
+Course: [course name]
+Level: [high school/undergraduate/graduate]
+Deadline: [your deadline]
+
+Thank you for creating this accessible educational resource. Your work is invaluable for students like myself.
+
+Best regards,
+[Your Name]`,
+
+                'advocate': `Dear RAHA,
+
+I am a human rights advocate working with [organization name] focused on [refugee rights/genocide prevention/statelessness/etc.].
+
+I am reaching out to explore:
+1. Collaboration opportunities to amplify awareness of Rohingya history
+2. Use of your documented timeline in our advocacy materials
+3. Joint initiatives for educational outreach and policy change
+
+Our organization works on: [describe your work]
+Target audience: [who you reach]
+Proposed collaboration: [your idea]
+
+Your archive provides the factual foundation that advocacy work desperately needs. I would welcome the opportunity to discuss how we can work together.
+
+In solidarity,
+[Your Name]
+[Organization]
+[Role]`,
+
+                'correction': `Dear RAHA,
+
+Thank you for maintaining this comprehensive historical archive. I am writing to suggest a correction/update to ensure the highest accuracy of your documentation.
+
+Page/Section: [which page needs updating]
+Current Information: [what is currently stated]
+Suggested Correction: [what should be changed]
+Source/Citation: [your evidence - link, document, official report]
+
+I believe this update is important because: [explain why]
+
+I am happy to provide additional documentation or context to support this correction. Please advise on your preferred process for submitting verified updates.
+
+Respectfully,
+[Your Name]
+[Your credentials if relevant]`,
+
+                'general': `Dear RAHA,
+
+I recently visited the Rohingya Historical Archive and wanted to express my appreciation for this comprehensive educational resource.
+
+[Choose what applies to you:]
+
+□ I found the timeline particularly helpful for understanding the sequence of events
+□ The documentation section clarified legal aspects I was confused about
+□ I am using this resource for personal education and awareness
+□ I would like to support this project in some way
+□ I have a question about: [your question]
+
+Thank you for your dedication to preserving and documenting this important history. The world needs more resources like this.
+
+Best wishes,
+[Your Name]
+[Your location if you wish to share]`
+            };
+
+            if (messages[type]) {
+                document.getElementById('message').value = messages[type];
+            }
+
+            // Scroll to form
+            document.getElementById('contactForm').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>        }
 
         .contact-info {
             background: var(--light);
