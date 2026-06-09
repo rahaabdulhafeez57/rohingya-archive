@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohingya Historical Archive | Documenting History</title>
+    <meta name="description" content="Comprehensive historical documentation of the Rohingya people, from ancient Arakan to present day crisis.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a365d;
+            --secondary: #c53030;
+            --accent: #d69e2e;
+            --text: #2d3748;
+            --light: #f7fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--white);
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: none;
+            list-style: none;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background: var(--primary);
+            padding: 1rem;
+        }
+
+        .nav-links.active {
+            display: block;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            display: block;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--white);
+            border-radius: 2px;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #2c5282 100%);
+            color: var(--white);
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 3rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .section-text {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            text-align: center;
+            color: #718096;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Feature Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .feature-card p {
+            color: #718096;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .link-arrow {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Timeline Preview */
+        .timeline-preview {
+            background: var(--light);
+            padding: 3rem 1rem;
+        }
+
+        .timeline-preview .section-title {
+            margin-bottom: 2rem;
+        }
+
+        .timeline-mini {
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .timeline-item .year {
+            font-weight: 800;
+            color: var(--secondary);
+            min-width: 60px;
+            font-size: 1.1rem;
+        }
+
+        .timeline-item .content h4 {
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .timeline-item .content p {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .center-btn {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary);
+            color: var(--white);
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin: 0.3rem 0;
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex !important;
+                position: static;
+                width: auto;
+                gap: 2rem;
+                padding: 0;
+            }
+
+            .nav-links a {
+                border: none;
+                padding: 0;
+            }
+
+            .hamburger {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+
+            .stat-label {
+                font-size: 0.9rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .section {
+                padding: 5rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Rohingya Archive</a>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="timeline.html">Timeline</a></li>
+                <li><a href="history.html">History</a></li>
+                <li><a href="documentation.html">Documentation</a></li>
+                <li><a href="current-crisis.html">Current Crisis</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Documenting Rohingya History</h1>
+        <p class="hero-subtitle">From the ancient Kingdom of Arakan to the world's largest refugee crisis</p>
+        <div class="hero-stats">
+            <div class="stat">
+                <span class="stat-number">1.1M+</span>
+                <span class="stat-label">Refugees in Bangladesh</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">1784</span>
+                <span class="stat-label">First Documented Displacement</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">Stateless</span>
+                <span class="stat-label">Since 1982</span>
+            </div>
+        </div>
+        <a href="timeline.html" class="cta-button">Explore Timeline</a>
+    </section>
+
+    <!-- Introduction -->
+    <section class="section">
+        <h2 class="section-title">Who Are the Rohingya?</h2>
+        <p class="section-text">The Rohingya are a stateless ethnic group, predominantly Muslim, indigenous to Rakhine State (historically Arakan) in Myanmar. For centuries, they lived alongside Buddhist communities in the region. Following repeated cycles of targeted violence since 1962 and continuous denial of their rights, nearly one million Rohingya now live in the world's largest refugee camp in Cox's Bazar, Bangladesh.</p>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Historical Documentation</h3>
+                <p>Verified timeline from 1784 to present, sourced from UN reports, MSF, and academic research.</p>
+                <a href="history.html" class="link-arrow">Read History →</a>
+            </div>
+            <div class="feature-card">
+                <h3>Legal Framework</h3>
+                <p>Analysis of the 1982 Citizenship Law, identity documentation, and international law.</p>
+                <a href="documentation.html" class="link-arrow">View Documentation →</a>
+            </div>
+            <div class="feature-card">
+                <h3>Current Crisis</h3>
+                <p>Real-time updates on the 2024-2026 situation, including civil war impact and boat crisis.</p>
+                <a href="current-crisis.html" class="link-arrow">Current Updates →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Preview -->
+    <section class="timeline-preview">
+        <div class="section">
+            <h2 class="section-title">Key Historical Moments</h2>
+            <div class="timeline-mini">
+                <div class="timeline-item">
+                    <span class="year">1784</span>
+                    <div class="content">
+                        <h4>Burmese Conquest</h4>
+                        <p>King Bodawpaya invades Arakan; thousands flee to Bengal</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <span class="year">1982</span>
+                    <div class="content">
+                        <h4>Statelessness Enshrined</h4>
+                        <p>Citizenship Law excludes Rohingya from 135 recognized ethnic groups</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <span class="year">2017</span>
+                    <div class="content">
+                        <h4>Genocide</h4>
+                        <p>700,000+ flee; 6,700+ killed; UN calls it "textbook ethnic cleansing"</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <span class="year">2024</span>
+                    <div class="content">
+                        <h4>Civil War & Conscription</h4>
+                        <p>65,000+ new refugees; forced military conscription by junta</p>
+                    </div>
+                </div>
+            </div>
+            <div class="center-btn">
+                <a href="timeline.html" class="btn-secondary">View Full Timeline</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Rohingya Historical Archive. Educational documentation project.</p>
+        <p>Sources: UNHCR, MSF, Rohingyatographer, Mercy Corps</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+    </script>
+
+</body>
+</html>
