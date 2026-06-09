@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Timeline | Rohingya Archive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a365d;
+            --secondary: #c53030;
+            --accent: #d69e2e;
+            --text: #2d3748;
+            --light: #f7fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--white);
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: none;
+            list-style: none;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background: var(--primary);
+            padding: 1rem;
+        }
+
+        .nav-links.active {
+            display: block;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            display: block;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--white);
+            border-radius: 2px;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: var(--primary);
+            color: var(--white);
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            opacity: 0.9;
+        }
+
+        /* Filter Buttons */
+        .filter-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.2rem;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Timeline */
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1rem 3rem;
+        }
+
+        .timeline-event {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--secondary);
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .event-date {
+            min-width: 100px;
+            font-weight: 800;
+            color: var(--secondary);
+            font-size: 1rem;
+        }
+
+        .event-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .event-content p {
+            color: #718096;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .event-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .event-tag {
+            background: var(--light);
+            color: var(--primary);
+            padding: 0.2rem 0.7rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary);
+            color: var(--white);
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex !important;
+                position: static;
+                width: auto;
+                gap: 2rem;
+                padding: 0;
+            }
+
+            .nav-links a {
+                border: none;
+                padding: 0;
+            }
+
+            .hamburger {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .event-date {
+                min-width: 120px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Rohingya Archive</a>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="timeline.html" class="active">Timeline</a></li>
+                <li><a href="history.html">History</a></li>
+                <li><a href="documentation.html">Documentation</a></li>
+                <li><a href="current-crisis.html">Current Crisis</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Complete Historical Timeline</h1>
+        <p>From the Kingdom of Arakan to the present day refugee crisis</p>
+    </section>
+
+    <!-- Filter Buttons -->
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterEvents('all')">All Events</button>
+        <button class="filter-btn" onclick="filterEvents('ancient')">Ancient (Pre-1948)</button>
+        <button class="filter-btn" onclick="filterEvents('military')">Military Era (1962-2011)</button>
+        <button class="filter-btn" onclick="filterEvents('modern')">Modern Crisis (2012-2026)</button>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline-container" id="timelineContainer">
+
+        <!-- Ancient Period -->
+        <div class="timeline-event" data-category="ancient" style="animation-delay: 0.1s;">
+            <div class="event-date">8th Century</div>
+            <div class="event-content">
+                <h3>Early Muslim Settlement</h3>
+                <p>Arab traders and settlers establish Muslim communities in Arakan (Rakhine), creating a diverse religious landscape alongside Buddhist populations.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Ancient History</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="ancient" style="animation-delay: 0.15s;">
+            <div class="event-date">1429-1784</div>
+            <div class="event-content">
+                <h3>Independent Arakan Kingdom</h3>
+                <p>Mrauk-U dynasty rules an independent multi-ethnic kingdom with Buddhist and Muslim populations coexisting. The kingdom maintains diplomatic relations with Bengal.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Ancient History</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="ancient" style="animation-delay: 0.2s;">
+            <div class="event-date">1784</div>
+            <div class="event-content">
+                <h3>Burmese Conquest of Arakan</h3>
+                <p>King Bodawpaya invades and annexes Arakan. Oppressive rule forces thousands of Arakanese (both Muslim and Buddhist) to flee to British-controlled Bengal, particularly the Cox's Bazar area.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Displacement</span>
+                    <span class="event-tag">Ancient History</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="ancient" style="animation-delay: 0.25s;">
+            <div class="event-date">1824-1948</div>
+            <div class="event-content">
+                <h3>British Colonial Period</h3>
+                <p>British annex Arakan after First Anglo-Burmese War. Significant labor migration from Bengal to Arakan occurs. The region develops distinct ethnic and religious demographics.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Colonial Era</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="ancient" style="animation-delay: 0.3s;">
+            <div class="event-date">1942</div>
+            <div class="event-content">
+                <h3>WWII Communal Violence</h3>
+                <p>British retreat and Japanese invasion trigger violence between Rakhine Buddhists and Rohingya Muslims. Approximately 100,000 Muslims are massacred; 22,000-80,000 flee to Bengal. 307 villages destroyed.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Violence</span>
+                    <span class="event-tag">Displacement</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="ancient" style="animation-delay: 0.35s;">
+            <div class="event-date">1948</div>
+            <div class="event-content">
+                <h3>Union of Burma Independence</h3>
+                <p>Burma gains independence. Initially, Rohingya are recognized as an ethnic group under the 1948 Union Citizenship Act. Several Rohingya are elected to Parliament. However, the Burma Territorial Force conducts operations against Rohingya, forcing 30,000-50,000 to flee to East Pakistan.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Independence</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="ancient" style="animation-delay: 0.4s;">
+            <div class="event-date">1959</div>
+            <div class="event-content">
+                <h3>Mass Evictions</h3>
+                <p>Immigration officials uproot Rohingya from villages in Maungdaw and Buthidaung, pushing thousands into East Pakistan. Reports of torture documented.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Displacement</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Military Era -->
+        <div class="timeline-event" data-category="military" style="animation-delay: 0.45s;">
+            <div class="event-date">1962</div>
+            <div class="event-content">
+                <h3>Military Coup & "Burmanization"</h3>
+                <p>General Ne Win seizes power, ending democracy. Military junta introduces "Burmanization" doctrine prioritizing Buddhist identity. Systematic targeting of minorities begins. Refugees start fleeing to Bangladesh.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Military Rule</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="military" style="animation-delay: 0.5s;">
+            <div class="event-date">1974</div>
+            <div class="event-content">
+                <h3>Emergency Immigration Act</h3>
+                <p>New constitution and Emergency Immigration Act provide framework for marginalization. Authorities begin confiscating National Registration Cards (NRC) from Rohingya, replacing them with "Foreign Registration Cards" identifying them as non-citizens.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Legal Exclusion</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="military" style="animation-delay: 0.55s;">
+            <div class="event-date">1978</div>
+            <div class="event-content">
+                <h3>Operation Nagamin (Dragon King)</h3>
+                <p>Military launches census/immigration operation to identify "illegal immigrants." Widespread arrests, torture, sexual violence, and village burnings. 200,000-300,000 flee to Bangladesh. 10,000-40,000 die in refugee camps from hunger and disease. Repatriation of ~200,000 by 1979, often involuntary.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Mass Violence</span>
+                    <span class="event-tag">Displacement</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="military" style="animation-delay: 0.6s;">
+            <div class="event-date">1982</div>
+            <div class="event-content">
+                <h3>Citizenship Law - Statelessness Enshrined</h3>
+                <p>New Citizenship Law replaces 1948 Act. Full citizenship restricted to 135 "national races" that can prove presence before 1823. Rohingya are excluded from the list, rendering them effectively stateless. Vulnerable to arbitrary arrest, forced labor, and movement restrictions.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Statelessness</span>
+                    <span class="event-tag">Legal Exclusion</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="military" style="animation-delay: 0.65s;">
+            <div class="event-date">1991-1992</div>
+            <div class="event-content">
+                <h3>Operation Pyi Thaya (Clean & Beautiful Nation)</h3>
+                <p>SLORC military launches counter-insurgency campaign targeting civilians. Forced labor, rape, arbitrary detention, land confiscation. 250,000-270,000 flee to Bangladesh. Forced repatriation begins 1992 despite international protests. ~230,000 returned by 2005, many coerced.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Mass Violence</span>
+                    <span class="event-tag">Displacement</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modern Crisis -->
+        <div class="timeline-event" data-category="modern" style="animation-delay: 0.7s;">
+            <div class="event-date">2012</div>
+            <div class="event-content">
+                <h3>Communal Violence & IDP Camps</h3>
+                <p>Violence sparked by rape/murder of Buddhist woman. Riots and arson between communities. 192 killed (official). ~140,000 internally displaced to camps. Tens of thousands flee to Bangladesh by boat. Most remain confined in camps; return to villages denied.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Communal Violence</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="modern" style="animation-delay: 0.75s;">
+            <div class="event-date">2014</div>
+            <div class="event-content">
+                <h3>Excluded from Census</h3>
+                <p>First official census in decades conducted. Rohingya are forbidden to participate, further erasing their official existence in Myanmar.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Erasure</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="modern" style="animation-delay: 0.8s;">
+            <div class="event-date">2015</div>
+            <div class="event-content">
+                <h3>Excluded from Elections</h3>
+                <p>Democratic elections held. Rohingya excluded as both candidates and voters, despite previous participation rights.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Political Exclusion</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="modern" style="animation-delay: 0.85s;">
+            <div class="event-date">2016</div>
+            <div class="event-content">
+                <h3>October "Clearance Operations"</h3>
+                <p>Military response to attacks on border posts by Harakah al-Yaqin (ARSA). 70,000-90,000 flee to Bangladesh. Hundreds killed; mass rape and village burnings documented.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Military Operations</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="modern" style="animation-delay: 0.9s;">
+            <div class="event-date">August 2017</div>
+            <div class="event-content">
+                <h3>Genocide - Mass Clearance Operations</h3>
+                <p>Largest campaign of violence in modern history. Military response to ARSA attacks. UN describes as "textbook ethnic cleansing" and genocide. 700,000-800,000+ flee to Bangladesh. 6,700-13,750+ killed in first month (730 children). 354 villages destroyed. Failed repatriation attempts in 2018/2019.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Genocide</span>
+                    <span class="event-tag">Mass Displacement</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="modern" style="animation-delay: 0.95s;">
+            <div class="event-date">2012-2015</div>
+            <div class="event-content">
+                <h3>Andaman Sea "Boat Crisis"</h3>
+                <p>Fleeing persecution and IDP camps via smugglers. ~170,000 flee by sea to Thailand, Malaysia, Indonesia. Hundreds die at sea from starvation, drowning, or abuse.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Boat Crisis</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-event" data-category="modern" style="animation-delay: 1s;">
+            <div class="event-date">2021</div>
+            <div class="event-content">
+                <h3>Military Coup (Tatmadaw)</h3>
+                <p>Junta seizes power from civilian government. Worsening security; "slow genocide" via blockades. 600,000 Rohingya remain trapped in Rakhine. ~38,000 civilians killed nationally since coup.</p>
+                <div class="event-tags">
+                    <span class="event-tag">Military Coup</span>
+                </div>
+    
